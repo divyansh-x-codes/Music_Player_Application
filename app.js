@@ -79,6 +79,18 @@ function stopSong(){
     }
 }
 
+// for Next Song 
+function nextSong(){
+    if(songs.length === 0){
+        return ;
+    }
+    currentSong++;
+    if (currentSong >= songs.length){
+        currentSong = 0;
+    }
+    playSong();
+}
+
 
 
 process.stdin.setRawMode(true);
@@ -94,6 +106,23 @@ process.stdin.on("data",function(data){
     }
     else if (data[0] ===0x73){
         stopSong();
+    }
+      // N
+    else if (data[0] === 0x6e) {
+        nextSong();
+    }
+ // for exit the process 
+    else if (data[0] === 0x71) {
+
+        if (player !== null) {
+            player.kill("SIGKILL");
+        }
+
+        process.stdin.setRawMode(false);
+
+        console.log("Goodbye!");
+
+        process.exit(0);
     }
 })
 
