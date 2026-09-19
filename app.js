@@ -55,12 +55,27 @@ function playPause(){
     }
 
 }
+// For Resume -> R
+function resuumeSong(){
+    if (player !== null && paused === true){
+        player.kill("SIGCONT");
+        paused = false;
+        console.log(">Resumed");
+    }
+}
+
+
+
 process.stdin.setRawMode(true);
 process.stdin.resume();
 process.stdin.on("data",function(data){
-    //for Play
+    //for Play -> P
     if(data[0] === 0x70){
         playPause();
+    }
+    // for resume -> R
+    if (data[0] ===0x72){
+        resuumeSong();
     }
 })
 
