@@ -53,6 +53,11 @@ function playPause(){
         console.log(" || Paused:");
 
     }
+    else{
+        player.kill("SIGCONT");
+        paused = false;
+        console.log(">Resumed");
+    }
 
 }
 // For Resume -> R
@@ -61,6 +66,16 @@ function resuumeSong(){
         player.kill("SIGCONT");
         paused = false;
         console.log(">Resumed");
+    }
+}
+
+// for Stop -> S
+function stopSong(){
+    if (player !==null){
+        player.kill("SIGKILL");
+        player = null;
+        paused = false;
+        console.log("O stopped");
     }
 }
 
@@ -76,6 +91,9 @@ process.stdin.on("data",function(data){
     // for resume -> R
     if (data[0] ===0x72){
         resuumeSong();
+    }
+    else if (data[0] ===0x73){
+        stopSong();
     }
 })
 
